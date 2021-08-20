@@ -9,6 +9,17 @@
 
 namespace abacus::bignum {
 
+using digits_type = std::vector<std::uint8_t>;
+
+namespace {
+
+bool do_less_than(digits_type const& lhs, digits_type const& rhs) {
+    return std::lexicographical_compare(lhs.rbegin(), lhs.rend(), rhs.rbegin(),
+                                        rhs.rend());
+}
+
+} // namespace
+
 BigNum::BigNum(std::int64_t number) {
     if (number == 0) {
         return;
@@ -68,9 +79,7 @@ bool BigNum::less_than(BigNum const& rhs) const {
         return sign_ < rhs.sign_;
     }
 
-    return std::lexicographical_compare(digits_.rbegin(), digits_.rend(),
-                                        rhs.digits_.rbegin(),
-                                        rhs.digits_.rend());
+    return do_less_than(digits_, rhs.digits_);
 }
 
 void BigNum::canonicalize() {
