@@ -13,6 +13,8 @@ using digits_type = std::vector<std::uint8_t>;
 
 namespace {
 
+auto static constexpr BASE = 10;
+
 bool do_less_than(digits_type const& lhs, digits_type const& rhs) {
     return std::lexicographical_compare(lhs.rbegin(), lhs.rend(), rhs.rbegin(),
                                         rhs.rend());
@@ -30,8 +32,8 @@ digits_type do_addition(digits_type const& lhs, digits_type const& rhs) {
 
     while (it1 != end1 && it2 != end2) {
         int addition = *it1 + *it2 + carry;
-        carry = addition / 10;
-        res.push_back(addition % 10);
+        carry = addition / BASE;
+        res.push_back(addition % BASE);
         ++it1;
         ++it2;
     }
@@ -45,8 +47,8 @@ digits_type do_addition(digits_type const& lhs, digits_type const& rhs) {
 
     while (it != end) {
         int addition = *it + carry;
-        carry = addition / 10;
-        res.push_back(addition % 10);
+        carry = addition / BASE;
+        res.push_back(addition % BASE);
         ++it;
     }
 
@@ -77,8 +79,8 @@ digits_type do_multiplication(digits_type const& lhs, digits_type const& rhs) {
         for (std::size_t j = 0; j < rhs.size(); ++j) {
             int multiplication = lhs[i] * rhs[j];
             res[i + j] += multiplication + carry;
-            carry = res[i + j] / 10;
-            res[i + j] %= 10;
+            carry = res[i + j] / BASE;
+            res[i + j] %= BASE;
         }
         res[i + rhs.size()] += carry;
     }
@@ -101,8 +103,8 @@ BigNum::BigNum(std::int64_t number) {
 
     auto abs = static_cast<std::uint64_t>(std::abs(number));
     do {
-        digits_.push_back(abs % 10);
-        abs /= 10;
+        digits_.push_back(abs % BASE);
+        abs /= BASE;
     } while (abs);
 
     assert(is_canonicalized());
@@ -266,7 +268,7 @@ bool BigNum::is_canonicalized() const {
     }
 
     auto const overflow = std::find_if(digits_.begin(), digits_.end(),
-                                       [](auto v) { return v >= 10; });
+                                       [](auto v) { return v >= BASE; });
     if (overflow != digits_.end()) {
         return false;
     }
