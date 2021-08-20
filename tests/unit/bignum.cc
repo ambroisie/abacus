@@ -206,3 +206,64 @@ TEST(BigNum, multiplication_mixed_signs) {
     EXPECT_EQ(minus_two * two, minus_four);
     EXPECT_EQ(minus_two * minus_two, four);
 }
+
+TEST(BigNum, division) {
+    auto const zero = BigNum(0);
+    auto const one = BigNum(1);
+    auto const two = BigNum(2);
+
+    EXPECT_EQ(one / one, one);
+    EXPECT_EQ(one / two, zero);
+    EXPECT_EQ(two / one, two);
+}
+
+TEST(BigNum, division_negative) {
+    auto const zero = BigNum(0);
+    auto const one = BigNum(1);
+    auto const minus_one = BigNum(-1);
+    auto const two = BigNum(2);
+    auto const minus_two = BigNum(-2);
+
+    EXPECT_EQ(one / minus_one, minus_one);
+    EXPECT_EQ(minus_one / one, minus_one);
+    EXPECT_EQ(minus_one / minus_one, one);
+    EXPECT_EQ(two / minus_two, minus_one);
+    EXPECT_EQ(minus_two / two, minus_one);
+    EXPECT_EQ(minus_two / minus_two, one);
+
+    EXPECT_EQ(one / minus_two, zero);
+    EXPECT_EQ(minus_one / two, zero);
+    EXPECT_EQ(one / minus_two, zero);
+    EXPECT_EQ(minus_one / minus_two, zero);
+    EXPECT_EQ(two / minus_one, minus_two);
+    EXPECT_EQ(minus_two / minus_one, two);
+    EXPECT_EQ(minus_two / one, minus_two);
+}
+
+TEST(BigNum, division_truncate) {
+    auto const one = BigNum(1);
+    auto const minus_one = BigNum(-1);
+    auto const three = BigNum(3);
+    auto const minus_three = BigNum(-3);
+    auto const five = BigNum(5);
+    auto const minus_five = BigNum(-5);
+
+    EXPECT_EQ(five / three, one);
+    EXPECT_EQ(five / minus_three, minus_one);
+    EXPECT_EQ(minus_five / three, minus_one);
+    EXPECT_EQ(minus_five / minus_three, one);
+}
+
+TEST(BigNum, div_mod_identity) {
+    auto const three = BigNum(3);
+    auto const minus_three = BigNum(-3);
+    auto const five = BigNum(5);
+    auto const minus_five = BigNum(-5);
+
+    EXPECT_EQ((five / three) * three + (five % three), five);
+    EXPECT_EQ((five / minus_three) * minus_three + (five % minus_three), five);
+    EXPECT_EQ((minus_five / three) * three + (minus_five % three), minus_five);
+    EXPECT_EQ((minus_five / minus_three) * minus_three
+                  + (minus_five % minus_three),
+              minus_five);
+}

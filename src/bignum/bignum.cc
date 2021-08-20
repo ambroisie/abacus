@@ -92,6 +92,37 @@ digits_type do_multiplication(digits_type const& lhs, digits_type const& rhs) {
     return res;
 }
 
+std::pair<digits_type, digits_type> do_div_mod(digits_type const& lhs,
+                                               digits_type const& rhs) {
+    if (rhs.size() == 0) {
+        throw std::invalid_argument("attempt to divide by zero");
+    }
+
+    digits_type quotient;
+    digits_type remainder = lhs;
+
+    while (!do_less_than(remainder, rhs)) {
+        digits_type multiple = rhs;
+        digits_type rank;
+        rank.push_back(1);
+
+        digits_type prev_multiple = multiple;
+        digits_type prev_rank = rank;
+
+        while (!do_less_than(remainder, multiple)) {
+            prev_multiple = multiple;
+            prev_rank = rank;
+            multiple = do_addition(multiple, multiple);
+            rank = do_addition(rank, rank);
+        }
+
+        quotient = do_addition(quotient, prev_rank);
+        remainder = do_substraction(remainder, prev_multiple);
+    }
+
+    return std::make_pair(quotient, remainder);
+}
+
 } // namespace
 
 BigNum::BigNum(std::int64_t number) {
@@ -226,6 +257,14 @@ void BigNum::multiply(BigNum const& rhs) {
     canonicalize();
 }
 
+void BigNum::divide(BigNum const& rhs) {
+    std::tie(*this, std::ignore) = div_mod(*this, rhs);
+}
+
+void BigNum::modulo(BigNum const& rhs) {
+    std::tie(std::ignore, *this) = div_mod(*this, rhs);
+}
+
 bool BigNum::equal(BigNum const& rhs) const {
     assert(is_canonicalized());
     assert(rhs.is_canonicalized());
@@ -293,6 +332,30 @@ bool BigNum::is_positive() const {
 bool BigNum::is_negative() const {
     assert(is_canonicalized());
     return sign_ <= 0;
+}
+
+std::pair<BigNum, BigNum> div_mod(BigNum const& lhs, BigNum const& rhs) {
+    assert(lhs.is_canonicalized());
+    assert(rhs.is_canonicalized());
+
+    if (lhs.is_zero()) {
+        return std::make_pair(BigNum(), BigNum());
+    }
+
+    BigNum quotient;
+    BigNum remainder;
+
+    std::tie(quotient.digits_, remainder.digits_)
+        = do_div_mod(lhs.digits_, rhs.digits_);
+
+    // Respect the identity `(a/b)*b + (a%b) = a`
+    quotient.sign_ = lhs.sign_ * rhs.sign_;
+    remainder.sign_ = lhs.sign_;
+
+    quotient.canonicalize();
+    remainder.canonicalize();
+
+    return std::make_pair(quotient, remainder);
 }
 
 } // namespace abacus::bignum

@@ -62,6 +62,31 @@ public:
         return ret;
     }
 
+    friend BigNum& operator/=(BigNum& lhs, BigNum const& rhs) {
+        lhs.divide(rhs);
+        return lhs;
+    }
+
+    friend BigNum operator/(BigNum const& lhs, BigNum const& rhs) {
+        auto ret = lhs;
+        ret /= rhs;
+        return ret;
+    }
+
+    friend BigNum& operator%=(BigNum& lhs, BigNum const& rhs) {
+        lhs.modulo(rhs);
+        return lhs;
+    }
+
+    friend BigNum operator%(BigNum const& lhs, BigNum const& rhs) {
+        auto ret = lhs;
+        ret %= rhs;
+        return ret;
+    }
+
+    friend std::pair<BigNum, BigNum> div_mod(BigNum const& lhs,
+                                             BigNum const& rhs);
+
     friend bool operator==(BigNum const& lhs, BigNum const& rhs) {
         return lhs.equal(rhs);
     }
@@ -98,6 +123,8 @@ private:
     void add(BigNum const& rhs);
     void substract(BigNum const& rhs);
     void multiply(BigNum const& rhs);
+    void divide(BigNum const& rhs);
+    void modulo(BigNum const& rhs);
 
     bool equal(BigNum const& rhs) const;
     bool less_than(BigNum const& rhs) const;
