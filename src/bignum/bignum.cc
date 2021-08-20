@@ -27,6 +27,12 @@ BigNum::BigNum(std::int64_t number) {
     assert(is_canonicalized());
 }
 
+void BigNum::flip_sign() {
+    assert(is_canonicalized());
+
+    sign_ *= -1;
+}
+
 bool BigNum::equal(BigNum const& rhs) const {
     assert(is_canonicalized());
     assert(rhs.is_canonicalized());

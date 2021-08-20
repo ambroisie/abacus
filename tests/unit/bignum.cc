@@ -25,3 +25,14 @@ TEST(BigNum, comparisons) {
     ASSERT_GE(one, zero);
     ASSERT_GE(one, one);
 }
+
+TEST(BigNum, unary) {
+    auto const zero = BigNum(0);
+    auto const one = BigNum(1);
+
+    ASSERT_EQ(zero, -zero);
+    ASSERT_NE(one, -one);
+
+    auto const minus_one = BigNum(-1);
+    ASSERT_EQ(minus_one, -one);
+}

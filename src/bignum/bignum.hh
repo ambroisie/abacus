@@ -10,6 +10,16 @@ class BigNum {
 public:
     explicit BigNum(std::int64_t number);
 
+    friend BigNum operator+(BigNum const& rhs) {
+        return rhs;
+    }
+
+    friend BigNum operator-(BigNum const& rhs) {
+        auto ret = rhs;
+        ret.flip_sign();
+        return ret;
+    }
+
     friend bool operator==(BigNum const& lhs, BigNum const& rhs) {
         return lhs.equal(rhs);
     }
@@ -35,6 +45,8 @@ public:
     }
 
 private:
+    void flip_sign();
+
     bool equal(BigNum const& rhs) const;
     bool less_than(BigNum const& rhs) const;
 
