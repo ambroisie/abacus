@@ -2,6 +2,7 @@ abacus_sources = files(
   'abacus.cc',
 )
 
+subdir('bignum')
 subdir('parse')
 
 abacus = executable(
