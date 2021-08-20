@@ -52,6 +52,10 @@ digits_type do_addition(digits_type const& lhs, digits_type const& rhs) {
         ++it;
     }
 
+    if (carry != 0) {
+        res.push_back(carry);
+    }
+
     return res;
 }
 

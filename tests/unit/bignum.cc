@@ -115,6 +115,15 @@ TEST(BigNum, addition_flips_sign) {
     EXPECT_EQ(two + minus_one, one);
 }
 
+TEST(BigNum, addition_carry) {
+    auto const one = BigNum(1);
+    auto const nine = BigNum(9);
+    auto const ten = BigNum(10);
+
+    EXPECT_EQ(one + nine, ten);
+    EXPECT_EQ(nine + one, ten);
+}
+
 TEST(BigNum, substraction_positive) {
     auto const zero = BigNum(0);
     auto const one = BigNum(1);
