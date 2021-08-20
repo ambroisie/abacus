@@ -18,41 +18,41 @@ TEST(BigNum, dump) {
         return str.str();
     };
 
-    ASSERT_EQ(to_str(zero), "0");
-    ASSERT_EQ(to_str(one), "1");
-    ASSERT_EQ(to_str(minus_one), "-1");
-    ASSERT_EQ(to_str(forty_two), "42");
+    EXPECT_EQ(to_str(zero), "0");
+    EXPECT_EQ(to_str(one), "1");
+    EXPECT_EQ(to_str(minus_one), "-1");
+    EXPECT_EQ(to_str(forty_two), "42");
 }
 
 TEST(BigNum, equality) {
     auto const zero = BigNum(0);
     auto const one = BigNum(1);
 
-    ASSERT_EQ(zero, zero);
-    ASSERT_EQ(one, one);
-    ASSERT_NE(zero, one);
+    EXPECT_EQ(zero, zero);
+    EXPECT_EQ(one, one);
+    EXPECT_NE(zero, one);
 }
 
 TEST(BigNum, comparisons) {
     auto const zero = BigNum(0);
     auto const one = BigNum(1);
 
-    ASSERT_LT(zero, one);
-    ASSERT_LE(zero, one);
-    ASSERT_LE(zero, zero);
+    EXPECT_LT(zero, one);
+    EXPECT_LE(zero, one);
+    EXPECT_LE(zero, zero);
 
-    ASSERT_GT(one, zero);
-    ASSERT_GE(one, zero);
-    ASSERT_GE(one, one);
+    EXPECT_GT(one, zero);
+    EXPECT_GE(one, zero);
+    EXPECT_GE(one, one);
 }
 
 TEST(BigNum, unary) {
     auto const zero = BigNum(0);
     auto const one = BigNum(1);
 
-    ASSERT_EQ(zero, -zero);
-    ASSERT_NE(one, -one);
+    EXPECT_EQ(zero, -zero);
+    EXPECT_NE(one, -one);
 
     auto const minus_one = BigNum(-1);
-    ASSERT_EQ(minus_one, -one);
+    EXPECT_EQ(minus_one, -one);
 }

@@ -9,7 +9,7 @@ namespace abacus::bignum {
 
 class BigNum {
 public:
-    explicit BigNum(std::int64_t number);
+    explicit BigNum(std::int64_t number = 0);
 
     friend std::ostream& operator<<(std::ostream& out, BigNum const& num) {
         return num.dump(out);
