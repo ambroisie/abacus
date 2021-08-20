@@ -27,6 +27,17 @@ BigNum::BigNum(std::int64_t number) {
     assert(is_canonicalized());
 }
 
+bool BigNum::equal(BigNum const& rhs) const {
+    assert(is_canonicalized());
+    assert(rhs.is_canonicalized());
+
+    if (sign_ != rhs.sign_) {
+        return false;
+    }
+
+    return digits_ == rhs.digits_;
+}
+
 void BigNum::canonicalize() {
     auto const it = std::find_if(digits_.rbegin(), digits_.rend(),
                                  [](auto v) { return v != 0; });
