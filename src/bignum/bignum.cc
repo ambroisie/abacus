@@ -38,6 +38,19 @@ bool BigNum::equal(BigNum const& rhs) const {
     return digits_ == rhs.digits_;
 }
 
+bool BigNum::less_than(BigNum const& rhs) const {
+    assert(is_canonicalized());
+    assert(rhs.is_canonicalized());
+
+    if (sign_ != rhs.sign_) {
+        return sign_ < rhs.sign_;
+    }
+
+    return std::lexicographical_compare(digits_.rbegin(), digits_.rend(),
+                                        rhs.digits_.rbegin(),
+                                        rhs.digits_.rend());
+}
+
 void BigNum::canonicalize() {
     auto const it = std::find_if(digits_.rbegin(), digits_.rend(),
                                  [](auto v) { return v != 0; });

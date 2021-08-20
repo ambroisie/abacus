@@ -18,8 +18,25 @@ public:
         return !(lhs == rhs);
     }
 
+    friend bool operator<(BigNum const& lhs, BigNum const& rhs) {
+        return lhs.less_than(rhs);
+    }
+
+    friend bool operator>(BigNum const& lhs, BigNum const& rhs) {
+        return rhs < lhs;
+    }
+
+    friend bool operator<=(BigNum const& lhs, BigNum const& rhs) {
+        return !(lhs > rhs);
+    }
+
+    friend bool operator>=(BigNum const& lhs, BigNum const& rhs) {
+        return !(lhs < rhs);
+    }
+
 private:
     bool equal(BigNum const& rhs) const;
+    bool less_than(BigNum const& rhs) const;
 
     void canonicalize();
     bool is_canonicalized() const;
