@@ -6,13 +6,14 @@ gtest = dependency(
 
 if gtest.found()
   unit_test_sources = files(
-    'base.cc',
+    'bignum.cc',
   )
 
   unit_tests = executable(
     'unit_tests',
     sources: unit_test_sources,
     dependencies: [
+      bignum,
       gtest,
     ],
   )
