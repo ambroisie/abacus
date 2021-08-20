@@ -13,4 +13,11 @@ AllowShortFunctionsOnASingleLine: Empty
 
 # Make them level
 AccessModifierOffset: -4
+
+# It makes more sense this way
+BreakBeforeBinaryOperators: All
+BreakBeforeTernaryOperators: true
+
+# Aesthetic
+AlignOperands: AlignAfterOperator
 ---
