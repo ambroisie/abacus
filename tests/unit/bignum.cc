@@ -24,6 +24,20 @@ TEST(BigNum, dump) {
     EXPECT_EQ(to_str(forty_two), "42");
 }
 
+TEST(BigNum, read) {
+    auto const from_str = [](auto num) -> BigNum {
+        std::stringstream str(num);
+        BigNum res;
+        EXPECT_TRUE(str >> res);
+        return res;
+    };
+
+    EXPECT_EQ(from_str("0"), BigNum(0));
+    EXPECT_EQ(from_str("1"), BigNum(1));
+    EXPECT_EQ(from_str("-1"), BigNum(-1));
+    EXPECT_EQ(from_str("42"), BigNum(42));
+}
+
 TEST(BigNum, equality) {
     auto const zero = BigNum(0);
     auto const one = BigNum(1);

@@ -105,6 +105,41 @@ std::ostream& BigNum::dump(std::ostream& out) const {
     return out;
 }
 
+std::istream& BigNum::read(std::istream& in) {
+    bool parsed = false;
+    bool leading = true;
+
+    if (in.peek() == '-') {
+        in.get();
+        sign_ = -1;
+    } else {
+        sign_ = 1;
+    }
+
+    digits_type digits;
+    while (std::isdigit(in.peek())) {
+        parsed = true;
+        int digit = in.get() - '0';
+        if (digit != 0 || !leading) {
+            digits.push_back(digit);
+            leading = false;
+        }
+    }
+
+    if (leading) {
+        sign_ = 0;
+    }
+
+    if (!parsed) {
+        in.setstate(std::ios::failbit);
+    } else {
+        std::reverse(digits.begin(), digits.end());
+        digits_ = std::move(digits);
+    }
+
+    return in;
+}
+
 void BigNum::flip_sign() {
     assert(is_canonicalized());
 

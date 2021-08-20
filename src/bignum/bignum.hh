@@ -15,6 +15,10 @@ public:
         return num.dump(out);
     }
 
+    friend std::istream& operator>>(std::istream& in, BigNum& num) {
+        return num.read(in);
+    }
+
     friend BigNum operator+(BigNum const& rhs) {
         return rhs;
     }
@@ -73,6 +77,7 @@ public:
 
 private:
     std::ostream& dump(std::ostream& out) const;
+    std::istream& read(std::istream& in);
 
     void flip_sign();
     void add(BigNum const& rhs);
