@@ -12,6 +12,7 @@ public:
 
 private:
     void canonicalize();
+    bool is_canonicalized() const;
 
     std::vector<std::uint8_t> digits_{};
     int sign_ = 0;

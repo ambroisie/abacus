@@ -2,6 +2,7 @@
 
 #include <algorithm>
 
+#include <cassert>
 #include <cmath>
 
 namespace abacus::bignum {
@@ -22,6 +23,8 @@ BigNum::BigNum(std::int64_t number) {
         digits_.push_back(abs % 10);
         abs /= 10;
     } while (abs);
+
+    assert(is_canonicalized());
 }
 
 void BigNum::canonicalize() {
@@ -32,6 +35,28 @@ void BigNum::canonicalize() {
     if (digits_.size() == 0) {
         sign_ = 0;
     }
+
+    assert(is_canonicalized());
+}
+
+bool BigNum::is_canonicalized() const {
+    if (digits_.size() == 0) {
+        return sign_ == 0;
+    }
+
+    auto const leading_zeros = std::find_if(digits_.rbegin(), digits_.rend(),
+                                            [](auto v) { return v != 0; });
+    if (leading_zeros != digits_.rbegin()) {
+        return false;
+    }
+
+    auto const overflow = std::find_if(digits_.begin(), digits_.end(),
+                                       [](auto v) { return v >= 10; });
+    if (overflow != digits_.end()) {
+        return false;
+    }
+
+    return true;
 }
 
 } // namespace abacus::bignum
