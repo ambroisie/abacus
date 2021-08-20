@@ -156,3 +156,44 @@ TEST(BigNum, substraction_flips_sign) {
     EXPECT_EQ(one - two, minus_one);
     EXPECT_EQ(minus_one - minus_two, one);
 }
+
+TEST(BigNum, multiplication_zero) {
+    auto const zero = BigNum(0);
+    auto const one = BigNum(1);
+    auto const minus_one = BigNum(-1);
+
+    EXPECT_EQ(zero * zero, zero);
+    EXPECT_EQ(zero * one, zero);
+    EXPECT_EQ(one * zero, zero);
+    EXPECT_EQ(zero * minus_one, zero);
+    EXPECT_EQ(minus_one * zero, zero);
+}
+
+TEST(BigNum, multiplication_positive) {
+    auto const one = BigNum(1);
+    auto const two = BigNum(2);
+    auto const four = BigNum(4);
+
+    EXPECT_EQ(one * one, one);
+    EXPECT_EQ(two * one, two);
+    EXPECT_EQ(one * two, two);
+    EXPECT_EQ(two * two, four);
+}
+
+TEST(BigNum, multiplication_mixed_signs) {
+    auto const minus_one = BigNum(-1);
+    auto const one = BigNum(1);
+    auto const minus_two = BigNum(-2);
+    auto const two = BigNum(2);
+    auto const minus_four = BigNum(-4);
+    auto const four = BigNum(4);
+
+    EXPECT_EQ(one * minus_one, minus_one);
+    EXPECT_EQ(minus_one * one, minus_one);
+    EXPECT_EQ(minus_one * minus_one, one);
+    EXPECT_EQ(two * minus_one, minus_two);
+    EXPECT_EQ(minus_one * two, minus_two);
+    EXPECT_EQ(two * minus_two, minus_four);
+    EXPECT_EQ(minus_two * two, minus_four);
+    EXPECT_EQ(minus_two * minus_two, four);
+}

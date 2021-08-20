@@ -51,6 +51,17 @@ public:
         return ret;
     }
 
+    friend BigNum& operator*=(BigNum& lhs, BigNum const& rhs) {
+        lhs.multiply(rhs);
+        return lhs;
+    }
+
+    friend BigNum operator*(BigNum const& lhs, BigNum const& rhs) {
+        auto ret = lhs;
+        ret *= rhs;
+        return ret;
+    }
+
     friend bool operator==(BigNum const& lhs, BigNum const& rhs) {
         return lhs.equal(rhs);
     }
@@ -82,6 +93,7 @@ private:
     void flip_sign();
     void add(BigNum const& rhs);
     void substract(BigNum const& rhs);
+    void multiply(BigNum const& rhs);
 
     bool equal(BigNum const& rhs) const;
     bool less_than(BigNum const& rhs) const;

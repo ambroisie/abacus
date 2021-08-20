@@ -69,6 +69,23 @@ digits_type do_substraction(digits_type const& lhs, digits_type const& rhs) {
     return complement;
 }
 
+digits_type do_multiplication(digits_type const& lhs, digits_type const& rhs) {
+    digits_type res(lhs.size() + rhs.size());
+
+    for (std::size_t i = 0; i < lhs.size(); ++i) {
+        int carry = 0;
+        for (std::size_t j = 0; j < rhs.size(); ++j) {
+            int multiplication = lhs[i] * rhs[j];
+            res[i + j] += multiplication + carry;
+            carry = res[i + j] / 10;
+            res[i + j] %= 10;
+        }
+        res[i + rhs.size()] += carry;
+    }
+
+    return res;
+}
+
 } // namespace
 
 BigNum::BigNum(std::int64_t number) {
@@ -186,6 +203,21 @@ void BigNum::substract(BigNum const& rhs) {
     flip_sign();
 
     assert(is_canonicalized());
+}
+
+void BigNum::multiply(BigNum const& rhs) {
+    assert(is_canonicalized());
+    assert(rhs.is_canonicalized());
+
+    if (sign_ == 0 || rhs.sign_ == 0) {
+        *this = BigNum();
+        return;
+    }
+
+    digits_ = do_multiplication(digits_, rhs.digits_);
+    sign_ *= rhs.sign_;
+
+    canonicalize();
 }
 
 bool BigNum::equal(BigNum const& rhs) const {
