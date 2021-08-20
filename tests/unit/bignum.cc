@@ -1,8 +1,28 @@
+#include <sstream>
+
 #include <gtest/gtest.h>
 
 #include "bignum.hh"
 
 using namespace abacus::bignum;
+
+TEST(BigNum, dump) {
+    auto const zero = BigNum(0);
+    auto const one = BigNum(1);
+    auto const minus_one = BigNum(-1);
+    auto const forty_two = BigNum(42);
+
+    auto const to_str = [](auto num) {
+        std::stringstream str;
+        str << num;
+        return str.str();
+    };
+
+    ASSERT_EQ(to_str(zero), "0");
+    ASSERT_EQ(to_str(one), "1");
+    ASSERT_EQ(to_str(minus_one), "-1");
+    ASSERT_EQ(to_str(forty_two), "42");
+}
 
 TEST(BigNum, equality) {
     auto const zero = BigNum(0);

@@ -1,6 +1,8 @@
 #include "bignum.hh"
 
 #include <algorithm>
+#include <iostream>
+#include <iterator>
 
 #include <cassert>
 #include <cmath>
@@ -25,6 +27,20 @@ BigNum::BigNum(std::int64_t number) {
     } while (abs);
 
     assert(is_canonicalized());
+}
+
+std::ostream& BigNum::dump(std::ostream& out) const {
+    if (sign_ == 0) {
+        return out << '0';
+    }
+
+    if (sign_ < 0) {
+        out << '-';
+    }
+    std::copy(digits_.rbegin(), digits_.rend(),
+              std::ostream_iterator<int>(out));
+
+    return out;
 }
 
 void BigNum::flip_sign() {

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iosfwd>
 #include <vector>
 
 #include <cstdint>
@@ -9,6 +10,10 @@ namespace abacus::bignum {
 class BigNum {
 public:
     explicit BigNum(std::int64_t number);
+
+    friend std::ostream& operator<<(std::ostream& out, BigNum const& num) {
+        return num.dump(out);
+    }
 
     friend BigNum operator+(BigNum const& rhs) {
         return rhs;
@@ -45,6 +50,8 @@ public:
     }
 
 private:
+    std::ostream& dump(std::ostream& out) const;
+
     void flip_sign();
 
     bool equal(BigNum const& rhs) const;
