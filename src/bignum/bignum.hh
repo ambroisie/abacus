@@ -86,6 +86,10 @@ public:
         return !(lhs < rhs);
     }
 
+    bool is_zero() const;
+    bool is_positive() const;
+    bool is_negative() const;
+
 private:
     std::ostream& dump(std::ostream& out) const;
     std::istream& read(std::istream& in);

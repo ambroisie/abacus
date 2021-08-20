@@ -109,11 +109,11 @@ BigNum::BigNum(std::int64_t number) {
 }
 
 std::ostream& BigNum::dump(std::ostream& out) const {
-    if (sign_ == 0) {
+    if (is_zero()) {
         return out << '0';
     }
 
-    if (sign_ < 0) {
+    if (is_negative()) {
         out << '-';
     }
     std::copy(digits_.rbegin(), digits_.rend(),
@@ -167,11 +167,11 @@ void BigNum::add(BigNum const& rhs) {
     assert(is_canonicalized());
     assert(rhs.is_canonicalized());
 
-    if (rhs.sign_ == 0) {
+    if (rhs.is_zero()) {
         return;
     }
 
-    if (sign_ == 0) {
+    if (is_zero()) {
         *this = rhs;
         return;
     }
@@ -209,7 +209,7 @@ void BigNum::multiply(BigNum const& rhs) {
     assert(is_canonicalized());
     assert(rhs.is_canonicalized());
 
-    if (sign_ == 0 || rhs.sign_ == 0) {
+    if (is_zero() || rhs.is_zero()) {
         *this = BigNum();
         return;
     }
@@ -272,6 +272,21 @@ bool BigNum::is_canonicalized() const {
     }
 
     return true;
+}
+
+bool BigNum::is_zero() const {
+    assert(is_canonicalized());
+    return sign_ == 0;
+}
+
+bool BigNum::is_positive() const {
+    assert(is_canonicalized());
+    return sign_ >= 0;
+}
+
+bool BigNum::is_negative() const {
+    assert(is_canonicalized());
+    return sign_ <= 0;
 }
 
 } // namespace abacus::bignum
