@@ -10,4 +10,7 @@ PointerAlignment: Left
 
 # Short functions should not be on a single line, unless empty
 AllowShortFunctionsOnASingleLine: Empty
+
+# Make them level
+AccessModifierOffset: -4
 ---
