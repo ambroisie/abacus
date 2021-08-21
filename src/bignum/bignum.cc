@@ -20,6 +20,12 @@ bool do_less_than(digits_type const& lhs, digits_type const& rhs) {
                                         rhs.rend());
 }
 
+void do_trim_leading_zeros(digits_type& num) {
+    auto const it
+        = std::find_if(num.rbegin(), num.rend(), [](auto v) { return v != 0; });
+    num.erase(it.base(), num.end());
+}
+
 digits_type do_addition(digits_type const& lhs, digits_type const& rhs) {
     int carry = 0;
     digits_type res;
@@ -288,9 +294,7 @@ bool BigNum::less_than(BigNum const& rhs) const {
 }
 
 void BigNum::canonicalize() {
-    auto const it = std::find_if(digits_.rbegin(), digits_.rend(),
-                                 [](auto v) { return v != 0; });
-    digits_.erase(it.base(), digits_.end());
+    do_trim_leading_zeros(digits_);
 
     if (digits_.size() == 0) {
         sign_ = 0;
