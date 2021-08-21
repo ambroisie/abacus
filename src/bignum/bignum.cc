@@ -16,6 +16,10 @@ namespace {
 auto static constexpr BASE = 10;
 
 bool do_less_than(digits_type const& lhs, digits_type const& rhs) {
+    if (lhs.size() != rhs.size()) {
+        return lhs.size() < rhs.size();
+    }
+
     return std::lexicographical_compare(lhs.rbegin(), lhs.rend(), rhs.rbegin(),
                                         rhs.rend());
 }

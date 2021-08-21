@@ -60,6 +60,14 @@ TEST(BigNum, comparisons) {
     EXPECT_GE(one, one);
 }
 
+TEST(BigNum, comparisons_digits) {
+    auto const nine = BigNum(9);
+    auto const ten = BigNum(10);
+
+    EXPECT_LT(nine, ten);
+    EXPECT_GT(ten, nine);
+}
+
 TEST(BigNum, unary) {
     auto const zero = BigNum(0);
     auto const one = BigNum(1);
