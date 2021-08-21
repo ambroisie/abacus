@@ -267,3 +267,66 @@ TEST(BigNum, div_mod_identity) {
                   + (minus_five % minus_three),
               minus_five);
 }
+
+TEST(BigNum, pow_negative_exponent) {
+    auto const zero = BigNum(0);
+    auto const minus_one = BigNum(-1);
+    auto const three = BigNum(3);
+
+    EXPECT_EQ(pow(three, minus_one), zero);
+}
+
+TEST(BigNum, pow_zero) {
+    auto const zero = BigNum(0);
+    auto const one = BigNum(1);
+    auto const three = BigNum(3);
+
+    EXPECT_EQ(pow(three, zero), one);
+    EXPECT_EQ(pow(zero, three), zero);
+    EXPECT_EQ(pow(zero, zero), one); // unclear mathematically
+}
+
+TEST(BigNum, pow_one) {
+    auto const one = BigNum(1);
+    auto const three = BigNum(3);
+
+    EXPECT_EQ(pow(one, one), one);
+    EXPECT_EQ(pow(one, three), one);
+    EXPECT_EQ(pow(three, one), three);
+}
+
+TEST(BigNum, pow) {
+    auto const one = BigNum(1);
+    auto const two = BigNum(2);
+    auto const three = BigNum(3);
+    auto const four = BigNum(4);
+    auto const eight = BigNum(8);
+    auto const nine = BigNum(9);
+    auto const twenty_seven = BigNum(27);
+    auto const eighty_one = BigNum(81);
+
+    EXPECT_EQ(pow(two, two), four);
+    EXPECT_EQ(pow(two, three), eight);
+    EXPECT_EQ(pow(three, two), nine);
+    EXPECT_EQ(pow(three, three), twenty_seven);
+    EXPECT_EQ(pow(three, four), eighty_one);
+}
+
+TEST(BigNum, pow_negative) {
+    auto const one = BigNum(1);
+    auto const two = BigNum(2);
+    auto const minus_two = BigNum(-2);
+    auto const three = BigNum(3);
+    auto const minus_three = BigNum(-3);
+    auto const four = BigNum(4);
+    auto const minus_eight = BigNum(-8);
+    auto const nine = BigNum(9);
+    auto const minus_twenty_seven = BigNum(-27);
+    auto const eighty_one = BigNum(81);
+
+    EXPECT_EQ(pow(minus_two, two), four);
+    EXPECT_EQ(pow(minus_two, three), minus_eight);
+    EXPECT_EQ(pow(minus_three, two), nine);
+    EXPECT_EQ(pow(minus_three, three), minus_twenty_seven);
+    EXPECT_EQ(pow(three, four), eighty_one);
+}

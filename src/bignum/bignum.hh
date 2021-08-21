@@ -87,6 +87,8 @@ public:
     friend std::pair<BigNum, BigNum> div_mod(BigNum const& lhs,
                                              BigNum const& rhs);
 
+    friend BigNum pow(BigNum const& lhs, BigNum const& rhs);
+
     friend bool operator==(BigNum const& lhs, BigNum const& rhs) {
         return lhs.equal(rhs);
     }

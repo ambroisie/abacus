@@ -129,6 +129,49 @@ std::pair<digits_type, digits_type> do_div_mod(digits_type const& lhs,
     return std::make_pair(quotient, remainder);
 }
 
+// More optimised than full-on div_mod
+digits_type do_halve(digits_type num) {
+    assert(num.size() != 0);
+
+    int carry = 0;
+    for (auto i = num.rbegin(); i != num.rend(); ++i) {
+        auto const was_odd = (*i % 2) == 1;
+        *i /= 2;
+        *i += carry;
+        if (was_odd) {
+            carry = BASE / 2;
+        }
+    }
+
+    do_trim_leading_zeros(num);
+
+    return num;
+}
+
+bool is_odd(digits_type const& num) {
+    if (num.size() == 0) {
+        return false;
+    }
+
+    return (num.front() % 2) == 1;
+}
+
+digits_type do_pow(digits_type lhs, digits_type rhs) {
+    assert(rhs.size() != 0);
+
+    auto original = lhs;
+
+    while (rhs.size() != 0 && !(rhs.size() == 1 && rhs.front() == 1)) {
+        lhs = do_multiplication(lhs, lhs);
+        if (is_odd(rhs)) {
+            lhs = do_multiplication(lhs, original);
+        }
+        rhs = do_halve(rhs);
+    }
+
+    return lhs;
+}
+
 } // namespace
 
 BigNum::BigNum(std::int64_t number) {
@@ -360,6 +403,25 @@ std::pair<BigNum, BigNum> div_mod(BigNum const& lhs, BigNum const& rhs) {
     remainder.canonicalize();
 
     return std::make_pair(quotient, remainder);
+}
+
+BigNum pow(BigNum const& lhs, BigNum const& rhs) {
+    assert(lhs.is_canonicalized());
+    assert(rhs.is_canonicalized());
+
+    if (rhs.is_zero()) {
+        return BigNum(1);
+    } else if (rhs.is_negative()) {
+        return BigNum();
+    }
+
+    BigNum res;
+    res.digits_ = do_pow(lhs.digits_, rhs.digits_);
+
+    res.sign_ = is_odd(rhs.digits_) ? lhs.sign_ : 1;
+    res.canonicalize();
+
+    return res;
 }
 
 } // namespace abacus::bignum
