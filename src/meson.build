@@ -8,4 +8,8 @@ subdir('parse')
 abacus = executable(
   'abacus',
   sources: abacus_sources,
+  dependencies: [
+    bignum,
+    parse,
+  ],
 )
