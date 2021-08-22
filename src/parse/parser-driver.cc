@@ -28,6 +28,10 @@ yy::location const& ParserDriver::location() const {
     return current_location_;
 }
 
+ParserDriver::numeric_type& ParserDriver::result() {
+    return result_;
+}
+
 ParserDriver::numeric_type const& ParserDriver::result() const {
     return result_;
 }

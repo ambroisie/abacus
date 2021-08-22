@@ -22,6 +22,7 @@ public:
     yy::location& location();
     yy::location const& location() const;
 
+    numeric_type& result();
     numeric_type const& result() const;
 
 private:
