@@ -2,7 +2,9 @@
 
 namespace abacus::parse {
 
-ParserDriver::ParserDriver() = default;
+ParserDriver::ParserDriver()
+    : parse_trace_p_(std::getenv("PARSE")), scan_trace_p_(std::getenv("SCAN")) {
+}
 
 int ParserDriver::parse(std::string filename) {
     filename_ = std::move(filename);

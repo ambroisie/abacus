@@ -29,8 +29,8 @@ private:
     numeric_type result_{0};
     std::string filename_{};
     yy::location current_location_{};
-    bool parse_trace_p_ = false;
-    bool scan_trace_p_ = false;
+    bool parse_trace_p_;
+    bool scan_trace_p_;
 };
 
 } // namespace abacus::parse
