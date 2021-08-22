@@ -114,6 +114,7 @@ std::pair<digits_type, digits_type> do_div_mod(digits_type const& lhs,
     digits_type remainder = lhs;
 
     while (!do_less_than(remainder, rhs)) {
+        // TODO: use `do_halve` to back down after calculate highest multiple
         digits_type multiple = rhs;
         digits_type rank;
         rank.push_back(1);
