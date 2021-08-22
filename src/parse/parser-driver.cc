@@ -28,4 +28,8 @@ yy::location const& ParserDriver::location() const {
     return current_location_;
 }
 
+ParserDriver::numeric_type const& ParserDriver::result() const {
+    return result_;
+}
+
 } // namespace abacus::parser

@@ -31,4 +31,7 @@ parser = library(
   'parser-driver.hh',
   flex.process('scanner.ll'),
   bison.process('parser.yy'),
+  dependencies: [
+    bignum,
+  ],
 )

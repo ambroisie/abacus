@@ -1,4 +1,6 @@
 %{
+#include <sstream>
+
 #include "parser-driver.hh"
 #include "parser.hh"
 %}
@@ -41,7 +43,11 @@ int [0-9]+
 "("         return yy::parser::make_LPAREN(loc);
 ")"         return yy::parser::make_RPAREN(loc);
 
-{int}       return yy::parser::make_NUM(std::stoi(yytext), loc);
+{int}       {
+    abacus::bignum::BigNum num;
+    std::stringstream(yytext) >> num;
+    return yy::parser::make_NUM(num, loc);
+}
 
 .           {
     using namespace yy;

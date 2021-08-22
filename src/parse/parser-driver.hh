@@ -4,10 +4,14 @@
 
 #include "parser.hh"
 
+#include "bignum.hh" // FIXME: I would like `bignum/bignum.hh` path instead...
+
 namespace abacus::parser {
 
 class ParserDriver {
 public:
+    using numeric_type = abacus::bignum::BigNum;
+
     ParserDriver();
 
     int parse(std::string filename);
@@ -18,9 +22,10 @@ public:
     yy::location& location();
     yy::location const& location() const;
 
+    numeric_type const& result() const;
+
 private:
-    // FIXME: will become BigNum
-    int result_ = 0;
+    numeric_type result_{0};
     std::string filename_{};
     yy::location current_location_{};
     bool parse_trace_p_ = false;

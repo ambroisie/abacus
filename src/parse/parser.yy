@@ -35,6 +35,8 @@
 namespace abacus::parser {
 class ParserDriver;
 } // namespace abacus::parser
+
+#include "bignum.hh" // FIXME: I would like `bignum/bignum.hh` path instead...
 }
 
 %code provides {
@@ -54,8 +56,7 @@ class ParserDriver;
 
 %token EOF 0 "end-of-file"
 
-// FIXME:will become BigNum
-%token <int> NUM "number"
+%token <abacus::bignum::BigNum> NUM "number"
 
 // Use `<<` to print everything
 %printer { yyo << $$; } <*>;
@@ -73,8 +74,7 @@ class ParserDriver;
 %left TIMES DIVIDE
 %precedence UNARY
 
-// FIXME: will become BigNum
-%type <int> input exp
+%type <abacus::bignum::BigNum> input exp
 
 %%
 
