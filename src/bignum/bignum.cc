@@ -82,6 +82,8 @@ digits_type do_substraction(digits_type const& lhs, digits_type const& rhs) {
     std::transform(complement.begin(), complement.end(), complement.begin(),
                    take_complement);
 
+    do_trim_leading_zeros(complement);
+
     return complement;
 }
 
