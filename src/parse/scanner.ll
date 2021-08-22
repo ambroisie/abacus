@@ -20,6 +20,9 @@
 %{
     // Run at each match
     #define YY_USER_ACTION loc.columns(yyleng);
+
+    // When getting EOF
+    #define yyterminate() return yy::parser::make_EOF(loc)
 %}
 
 blank [ \t\r]
