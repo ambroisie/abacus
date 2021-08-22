@@ -60,7 +60,7 @@
 
         devShell = pkgs.mkShell {
           inherit (self.defaultPackage.${system})
-            buildInputs
+            checkInputs
             nativeBuildInputs
             ;
 
@@ -82,7 +82,7 @@
               pkg-config
             ];
 
-            buildInputs = with pkgs; [
+            checkInputs = with pkgs; [
               gtest
             ];
 
