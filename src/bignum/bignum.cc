@@ -179,6 +179,23 @@ digits_type do_pow(digits_type lhs, digits_type rhs) {
     return lhs;
 }
 
+digits_type do_sqrt(digits_type const& num) {
+    digits_type one;
+    one.push_back(1);
+    digits_type max = num;
+    digits_type min = do_addition(max, one);
+    min = do_halve(min);
+
+    while (do_less_than(min, max)) {
+        max = min;
+        std::tie(min, std::ignore) = do_div_mod(num, max);
+        min = do_addition(min, max);
+        min = do_halve(min);
+    }
+
+    return max;
+}
+
 } // namespace
 
 BigNum::BigNum(std::int64_t number) {
@@ -427,6 +444,26 @@ BigNum pow(BigNum const& lhs, BigNum const& rhs) {
 
     res.sign_ = is_odd(rhs.digits_) ? lhs.sign_ : 1;
     res.canonicalize();
+
+    return res;
+}
+
+BigNum sqrt(BigNum const& num) {
+    assert(num.is_canonicalized());
+
+    if (num.is_zero()) {
+        return BigNum();
+    } else if (num.is_negative()) {
+        throw std::invalid_argument(
+            "attempt to take the square root of a negative number");
+    }
+
+    BigNum res;
+
+    res.digits_ = do_sqrt(num.digits_);
+    res.sign_ = 1;
+
+    assert(res.is_canonicalized());
 
     return res;
 }

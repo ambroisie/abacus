@@ -338,3 +338,41 @@ TEST(BigNum, pow_negative) {
     EXPECT_EQ(pow(minus_three, three), minus_twenty_seven);
     EXPECT_EQ(pow(three, four), eighty_one);
 }
+
+TEST(BigNum, sqrt_zero) {
+    auto const zero = BigNum(0);
+
+    EXPECT_EQ(sqrt(zero), zero);
+}
+
+TEST(BigNum, sqrt_one) {
+    auto const one = BigNum(1);
+
+    EXPECT_EQ(sqrt(one), one);
+}
+
+TEST(BigNum, sqrt_truncation) {
+    auto const one = BigNum(1);
+    auto const two = BigNum(2);
+    auto const three = BigNum(3);
+
+    EXPECT_EQ(sqrt(two), one);
+    EXPECT_EQ(sqrt(three), one);
+}
+
+TEST(BigNum, sqrt) {
+    auto const two = BigNum(2);
+    auto const three = BigNum(3);
+    auto const four = BigNum(4);
+    auto const nine = BigNum(9);
+    auto const ten = BigNum(10);
+    auto const eighty_one = BigNum(81);
+    auto const ninety_nine = BigNum(99);
+    auto const hundred = BigNum(100);
+
+    EXPECT_EQ(sqrt(four), two);
+    EXPECT_EQ(sqrt(nine), three);
+    EXPECT_EQ(sqrt(eighty_one), nine);
+    EXPECT_EQ(sqrt(ninety_nine), nine);
+    EXPECT_EQ(sqrt(hundred), ten);
+}

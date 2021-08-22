@@ -89,6 +89,8 @@ public:
 
     friend BigNum pow(BigNum const& lhs, BigNum const& rhs);
 
+    friend BigNum sqrt(BigNum const& num);
+
     friend bool operator==(BigNum const& lhs, BigNum const& rhs) {
         return lhs.equal(rhs);
     }
