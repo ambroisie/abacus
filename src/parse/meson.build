@@ -1,8 +1,10 @@
 flex_binary = find_program('flex', required: true)
-flex = generator(
-  flex_binary,
-  output: '@BASENAME@.cc',
-  arguments: [
+lexer_sources = custom_target(
+  'lexer_sources',
+  input: 'scanner.ll',
+  output: 'scanner.cc',
+  command: [
+    flex_binary,
     '-o',
     '@OUTPUT@',
     '@INPUT@',
@@ -10,13 +12,15 @@ flex = generator(
 )
 
 bison_binary = find_program('bison', required: true)
-bison = generator(
-  bison_binary,
+parser_sources = custom_target(
+  'parser_sources',
+  input: 'parser.yy',
   output: [
-    '@BASENAME@.cc',
-    '@BASENAME@.hh',
+    'parser.cc',
+    'parser.hh',
   ],
-  arguments: [
+  command: [
+    bison_binary,
     '@INPUT@',
     '--output=@OUTPUT0@',
     '--defines=@OUTPUT1@',
@@ -25,13 +29,20 @@ bison = generator(
   ],
 )
 
-parser = library(
+parse_inc = include_directories('.')
+
+parse_lib = library(
   'parser',
   'parser-driver.cc',
   'parser-driver.hh',
-  flex.process('scanner.ll'),
-  bison.process('parser.yy'),
+  lexer_sources,
+  parser_sources,
   dependencies: [
     bignum,
   ],
+)
+
+parse = declare_dependency(
+  link_with: parse_lib,
+  include_directories: parse_inc,
 )
