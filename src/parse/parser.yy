@@ -79,7 +79,7 @@ class ParserDriver;
 %%
 
 input:
-    exp EOF
+    exp EOF { drv.result() = $1; }
   ;
 
 exp:
