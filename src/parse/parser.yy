@@ -32,9 +32,9 @@
 // Code that should be in the header
 %code requires {
 // Forward declare our driver
-namespace abacus::parser {
+namespace abacus::parse {
 class ParserDriver;
-} // namespace abacus::parser
+} // namespace abacus::parse
 
 #include "bignum.hh" // FIXME: I would like `bignum/bignum.hh` path instead...
 }
@@ -42,7 +42,7 @@ class ParserDriver;
 %code provides {
     // Forward ParserDriver to scanner
     #define YY_DECL \
-        yy::parser::symbol_type yylex(::abacus::parser::ParserDriver& drv)
+        yy::parser::symbol_type yylex(::abacus::parse::ParserDriver& drv)
     YY_DECL;
 }
 
@@ -52,7 +52,7 @@ class ParserDriver;
 }
 
 // Use the driver to carry context back-and-forth
-%param { abacus::parser::ParserDriver& drv }
+%param { abacus::parse::ParserDriver& drv }
 
 %token EOF 0 "end-of-file"
 

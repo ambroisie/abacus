@@ -59,7 +59,7 @@ int [0-9]+
 
 %%
 
-namespace abacus::parser {
+namespace abacus::parse {
 
 void ParserDriver::scan_open() {
     yy_flex_debug = scan_trace_p_;
@@ -76,4 +76,4 @@ void ParserDriver::scan_close() {
     fclose(yyin);
 }
 
-} // namespace abacus::parser
+} // namespace abacus::parse

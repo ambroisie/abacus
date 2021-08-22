@@ -6,7 +6,7 @@
 
 #include "bignum.hh" // FIXME: I would like `bignum/bignum.hh` path instead...
 
-namespace abacus::parser {
+namespace abacus::parse {
 
 class ParserDriver {
 public:
@@ -33,4 +33,4 @@ private:
     bool scan_trace_p_ = false;
 };
 
-} // namespace abacus::parser
+} // namespace abacus::parse

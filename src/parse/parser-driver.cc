@@ -1,6 +1,6 @@
 #include "parser-driver.hh"
 
-namespace abacus::parser {
+namespace abacus::parse {
 
 ParserDriver::ParserDriver() = default;
 
@@ -36,4 +36,4 @@ ParserDriver::numeric_type const& ParserDriver::result() const {
     return result_;
 }
 
-} // namespace abacus::parser
+} // namespace abacus::parse
