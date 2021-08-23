@@ -139,27 +139,28 @@ std::pair<digits_type, digits_type> do_div_mod(digits_type const& lhs,
         throw std::invalid_argument("attempt to divide by zero");
     }
 
+    digits_type multiple = rhs;
+    digits_type rank;
+    rank.push_back(1);
+
+    while (!do_less_than(lhs, multiple)) {
+        multiple = do_addition(multiple, multiple);
+        rank = do_addition(rank, rank);
+    }
+
     digits_type quotient;
     digits_type remainder = lhs;
 
     while (!do_less_than(remainder, rhs)) {
-        // TODO: use `do_halve` to back down after calculate highest multiple
-        digits_type multiple = rhs;
-        digits_type rank;
-        rank.push_back(1);
-
-        digits_type prev_multiple = multiple;
-        digits_type prev_rank = rank;
-
-        while (!do_less_than(remainder, multiple)) {
-            prev_multiple = multiple;
-            prev_rank = rank;
-            multiple = do_addition(multiple, multiple);
-            rank = do_addition(rank, rank);
+        while (do_less_than(remainder, multiple)) {
+            multiple = do_halve(multiple);
+            rank = do_halve(rank);
         }
 
-        quotient = do_addition(quotient, prev_rank);
-        remainder = do_substraction(remainder, prev_multiple);
+        assert(!do_less_than(multiple, rhs));
+
+        quotient = do_addition(quotient, rank);
+        remainder = do_substraction(remainder, multiple);
     }
 
     return std::make_pair(quotient, remainder);
