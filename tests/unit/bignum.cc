@@ -376,3 +376,24 @@ TEST(BigNum, sqrt) {
     EXPECT_EQ(sqrt(ninety_nine), nine);
     EXPECT_EQ(sqrt(hundred), ten);
 }
+
+TEST(BigNum, log2) {
+    auto const zero = BigNum(0);
+    auto const one = BigNum(1);
+    auto const two = BigNum(2);
+    auto const three = BigNum(3);
+    auto const four = BigNum(4);
+    auto const five = BigNum(5);
+    auto const seven = BigNum(7);
+    auto const eight = BigNum(8);
+    auto const nine = BigNum(9);
+
+    EXPECT_EQ(log2(one), zero);
+    EXPECT_EQ(log2(two), one);
+    EXPECT_EQ(log2(three), one);
+    EXPECT_EQ(log2(four), two);
+    EXPECT_EQ(log2(five), two);
+    EXPECT_EQ(log2(seven), two);
+    EXPECT_EQ(log2(eight), three);
+    EXPECT_EQ(log2(nine), three);
+}

@@ -468,4 +468,28 @@ BigNum sqrt(BigNum const& num) {
     return res;
 }
 
+BigNum log2(BigNum const& num) {
+    assert(num.is_canonicalized());
+
+    if (num.is_zero()) {
+        throw std::invalid_argument("attempt to take the log2 of zero");
+    } else if (num.is_negative()) {
+        throw std::invalid_argument(
+            "attempt to take the log2 of a negative number");
+    }
+
+    auto tmp = num;
+    auto res = BigNum(0);
+    auto one = BigNum(1);
+
+    while (tmp > one) {
+        tmp.digits_ = do_halve(tmp.digits_);
+        res += one;
+    }
+
+    assert(res.is_canonicalized());
+
+    return res;
+}
+
 } // namespace abacus::bignum
