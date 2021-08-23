@@ -30,6 +30,11 @@ void trim_leading_zeros(digits_type& num) {
     num.erase(it.base(), num.end());
 }
 
+std::ostream& do_dump(digits_type const& num, std::ostream& out) {
+    std::copy(num.rbegin(), num.rend(), std::ostream_iterator<int>(out));
+    return out;
+}
+
 // More optimised than full-on div_mod
 digits_type do_halve(digits_type num) {
     assert(num.size() != 0);
@@ -229,10 +234,8 @@ std::ostream& BigNum::dump(std::ostream& out) const {
     if (is_negative()) {
         out << '-';
     }
-    std::copy(digits_.rbegin(), digits_.rend(),
-              std::ostream_iterator<int>(out));
 
-    return out;
+    return do_dump(digits_, out);
 }
 
 std::istream& BigNum::read(std::istream& in) {
