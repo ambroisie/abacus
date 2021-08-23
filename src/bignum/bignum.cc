@@ -41,6 +41,8 @@ digits_type do_halve(digits_type num) {
         *i += carry;
         if (was_odd) {
             carry = BASE / 2;
+        } else {
+            carry = 0;
         }
     }
 
