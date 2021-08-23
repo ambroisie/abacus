@@ -24,7 +24,7 @@ bool do_less_than(digits_type const& lhs, digits_type const& rhs) {
                                         rhs.rend());
 }
 
-void do_trim_leading_zeros(digits_type& num) {
+void trim_leading_zeros(digits_type& num) {
     auto const it
         = std::find_if(num.rbegin(), num.rend(), [](auto v) { return v != 0; });
     num.erase(it.base(), num.end());
@@ -82,7 +82,7 @@ digits_type do_substraction(digits_type const& lhs, digits_type const& rhs) {
     std::transform(complement.begin(), complement.end(), complement.begin(),
                    take_complement);
 
-    do_trim_leading_zeros(complement);
+    trim_leading_zeros(complement);
 
     return complement;
 }
@@ -150,7 +150,7 @@ digits_type do_halve(digits_type num) {
         }
     }
 
-    do_trim_leading_zeros(num);
+    trim_leading_zeros(num);
 
     return num;
 }
@@ -361,7 +361,7 @@ bool BigNum::less_than(BigNum const& rhs) const {
 }
 
 void BigNum::canonicalize() {
-    do_trim_leading_zeros(digits_);
+    trim_leading_zeros(digits_);
 
     if (digits_.size() == 0) {
         sign_ = 0;
