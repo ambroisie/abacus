@@ -413,8 +413,8 @@ std::pair<BigNum, BigNum> div_mod(BigNum const& lhs, BigNum const& rhs) {
         return std::make_pair(BigNum(), BigNum());
     }
 
-    BigNum quotient;
-    BigNum remainder;
+    auto quotient = BigNum(0);
+    auto remainder = BigNum(0);
 
     std::tie(quotient.digits_, remainder.digits_)
         = do_div_mod(lhs.digits_, rhs.digits_);
@@ -439,7 +439,7 @@ BigNum pow(BigNum const& lhs, BigNum const& rhs) {
         return BigNum();
     }
 
-    BigNum res;
+    auto res = BigNum(0);
     res.digits_ = do_pow(lhs.digits_, rhs.digits_);
 
     res.sign_ = is_odd(rhs.digits_) ? lhs.sign_ : 1;
@@ -458,7 +458,7 @@ BigNum sqrt(BigNum const& num) {
             "attempt to take the square root of a negative number");
     }
 
-    BigNum res;
+    auto res = BigNum(0);
 
     res.digits_ = do_sqrt(num.digits_);
     res.sign_ = 1;
