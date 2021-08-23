@@ -93,6 +93,8 @@ public:
 
     friend BigNum log2(BigNum const& num);
 
+    friend BigNum log10(BigNum const& num);
+
     friend bool operator==(BigNum const& lhs, BigNum const& rhs) {
         return lhs.equal(rhs);
     }

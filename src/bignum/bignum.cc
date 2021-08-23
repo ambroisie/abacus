@@ -492,4 +492,22 @@ BigNum log2(BigNum const& num) {
     return res;
 }
 
+BigNum log10(BigNum const& num) {
+    assert(num.is_canonicalized());
+    assert(BASE == 10);
+
+    if (num.is_zero()) {
+        throw std::invalid_argument("attempt to take the log10 of zero");
+    } else if (num.is_negative()) {
+        throw std::invalid_argument(
+            "attempt to take the log10 of a negative number");
+    }
+
+    auto res = BigNum(num.digits_.size() - 1);
+
+    assert(res.is_canonicalized());
+
+    return res;
+}
+
 } // namespace abacus::bignum

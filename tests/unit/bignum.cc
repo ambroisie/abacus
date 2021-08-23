@@ -397,3 +397,23 @@ TEST(BigNum, log2) {
     EXPECT_EQ(log2(eight), three);
     EXPECT_EQ(log2(nine), three);
 }
+
+TEST(BigNum, log10) {
+    auto const zero = BigNum(0);
+    auto const one = BigNum(1);
+    auto const two = BigNum(2);
+    auto const nine = BigNum(9);
+    auto const ten = BigNum(10);
+    auto const eleven = BigNum(11);
+    auto const ninety_nine = BigNum(99);
+    auto const hundred = BigNum(100);
+    auto const hundred_one = BigNum(101);
+
+    EXPECT_EQ(log10(one), zero);
+    EXPECT_EQ(log10(nine), zero);
+    EXPECT_EQ(log10(ten), one);
+    EXPECT_EQ(log10(eleven), one);
+    EXPECT_EQ(log10(ninety_nine), one);
+    EXPECT_EQ(log10(hundred), two);
+    EXPECT_EQ(log10(hundred_one), two);
+}
