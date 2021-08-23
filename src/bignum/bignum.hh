@@ -115,6 +115,10 @@ public:
         return !(lhs < rhs);
     }
 
+    explicit operator bool() {
+        return !is_zero();
+    }
+
     bool is_zero() const;
     bool is_positive() const;
     bool is_negative() const;
