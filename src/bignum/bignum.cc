@@ -30,6 +30,33 @@ void trim_leading_zeros(digits_type& num) {
     num.erase(it.base(), num.end());
 }
 
+// More optimised than full-on div_mod
+digits_type do_halve(digits_type num) {
+    assert(num.size() != 0);
+
+    int carry = 0;
+    for (auto i = num.rbegin(); i != num.rend(); ++i) {
+        auto const was_odd = (*i % 2) == 1;
+        *i /= 2;
+        *i += carry;
+        if (was_odd) {
+            carry = BASE / 2;
+        }
+    }
+
+    trim_leading_zeros(num);
+
+    return num;
+}
+
+bool is_odd(digits_type const& num) {
+    if (num.size() == 0) {
+        return false;
+    }
+
+    return (num.front() % 2) == 1;
+}
+
 digits_type do_addition(digits_type const& lhs, digits_type const& rhs) {
     int carry = 0;
     digits_type res;
@@ -134,33 +161,6 @@ std::pair<digits_type, digits_type> do_div_mod(digits_type const& lhs,
     }
 
     return std::make_pair(quotient, remainder);
-}
-
-// More optimised than full-on div_mod
-digits_type do_halve(digits_type num) {
-    assert(num.size() != 0);
-
-    int carry = 0;
-    for (auto i = num.rbegin(); i != num.rend(); ++i) {
-        auto const was_odd = (*i % 2) == 1;
-        *i /= 2;
-        *i += carry;
-        if (was_odd) {
-            carry = BASE / 2;
-        }
-    }
-
-    trim_leading_zeros(num);
-
-    return num;
-}
-
-bool is_odd(digits_type const& num) {
-    if (num.size() == 0) {
-        return false;
-    }
-
-    return (num.front() % 2) == 1;
 }
 
 digits_type do_pow(digits_type lhs, digits_type rhs) {
