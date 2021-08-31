@@ -12,4 +12,5 @@ abacus = executable(
     bignum,
     parse,
   ],
+  install: true,
 )
