@@ -5,7 +5,7 @@ bignum_sources = files(
 
 bignum_inc = include_directories('.')
 
-bignum_lib = library(
+bignum_lib = static_library(
   'bignum',
   sources: bignum_sources,
 )

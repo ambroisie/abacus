@@ -31,7 +31,7 @@ parser_sources = custom_target(
 
 parse_inc = include_directories('.')
 
-parse_lib = library(
+parse_lib = static_library(
   'parser',
   'parser-driver.cc',
   'parser-driver.hh',
