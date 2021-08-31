@@ -87,7 +87,6 @@
             ];
 
             meta = with pkgs.lib; {
-              broken = true; # Only breaks under nix
               description = "A simple calculator using big numbers";
               homepage = "https://gitea.belanyi.fr/ambroisie/abacus";
               license = licenses.mit;
