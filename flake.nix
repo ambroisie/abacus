@@ -76,8 +76,8 @@
 
             nativeBuildInputs = with pkgs; [
               bison
+              cmake
               flex
-              meson
               ninja
               pkg-config
             ];
