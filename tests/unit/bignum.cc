@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include "bignum.hh"
+#include "bignum/bignum.hh"
 
 using namespace abacus::bignum;
 

@@ -36,7 +36,7 @@ namespace abacus::parse {
 class ParserDriver;
 } // namespace abacus::parse
 
-#include "bignum.hh" // FIXME: I would like `bignum/bignum.hh` path instead...
+#include "bignum/bignum.hh"
 }
 
 %code provides {

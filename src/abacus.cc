@@ -1,4 +1,4 @@
-#include "parser-driver.hh" // FIXME: I would like `parse/parser-driver.hh` path instead...
+#include "parse/parser-driver.hh"
 
 int main() {
     abacus::parse::ParserDriver driver{};

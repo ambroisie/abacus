@@ -4,7 +4,7 @@
 
 #include "parser.hh"
 
-#include "bignum.hh" // FIXME: I would like `bignum/bignum.hh` path instead...
+#include "bignum/bignum.hh"
 
 namespace abacus::parse {
 

@@ -10,6 +10,9 @@ target_compile_options(common_options INTERFACE
   -Wall
   -Wextra
 )
+target_include_directories(common_options INTERFACE
+  src
+)
 
 add_subdirectory(src)
 add_subdirectory(tests)
