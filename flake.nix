@@ -86,6 +86,8 @@
               gtest
             ];
 
+            doCheck = true;
+
             meta = with pkgs.lib; {
               description = "A simple calculator using big numbers";
               homepage = "https://gitea.belanyi.fr/ambroisie/abacus";
