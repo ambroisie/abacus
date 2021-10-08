@@ -59,10 +59,9 @@
         defaultPackage = self.packages.${system}.abacus;
 
         devShell = pkgs.mkShell {
-          inherit (self.defaultPackage.${system})
-            checkInputs
-            nativeBuildInputs
-            ;
+          inputsFrom = with self.packages.${system}; [
+            abacus
+          ];
 
           inherit (self.checks.${system}.pre-commit) shellHook;
         };
