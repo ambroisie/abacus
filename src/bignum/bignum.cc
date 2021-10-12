@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iostream>
 #include <iterator>
+#include <span>
 
 #include <cassert>
 #include <cmath>
@@ -82,18 +83,17 @@ digits_type do_addition(digits_type const& lhs, digits_type const& rhs) {
         ++it2;
     }
 
-    auto [it, end] = [=]() {
+    auto leftover = [=]() {
         if (it1 != end1) {
-            return std::make_pair(it1, end1);
+            return std::span(it1, end1);
         }
-        return std::make_pair(it2, end2);
+        return std::span(it2, end2);
     }();
 
-    while (it != end) {
-        int addition = *it + carry;
+    for (auto value : leftover) {
+        int addition = value + carry;
         carry = addition / BASE;
         res.push_back(addition % BASE);
-        ++it;
     }
 
     if (carry != 0) {
