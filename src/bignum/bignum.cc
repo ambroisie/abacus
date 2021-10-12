@@ -82,12 +82,12 @@ digits_type do_addition(digits_type const& lhs, digits_type const& rhs) {
         ++it2;
     }
 
-    auto it = it1;
-    auto end = end1;
-    if (it1 == end1) {
-        it = it2;
-        end = end2;
-    }
+    auto [it, end] = [=]() {
+        if (it1 != end1) {
+            return std::make_pair(it1, end1);
+        }
+        return std::make_pair(it2, end2);
+    }();
 
     while (it != end) {
         int addition = *it + carry;
