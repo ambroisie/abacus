@@ -8,6 +8,10 @@ steps:
   commands:
   - nix flake check
 
+- name: package check
+  commands:
+  - nix build
+
 - name: notifiy
   commands:
   - nix run github:ambroisie/matrix-notifier
