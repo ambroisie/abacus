@@ -4,7 +4,7 @@ enable_testing()
 
 add_library(common_options INTERFACE)
 target_compile_features(common_options INTERFACE
-  cxx_std_17
+  cxx_std_20
 )
 target_compile_options(common_options INTERFACE
   -Wall
