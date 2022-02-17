@@ -29,9 +29,40 @@
   };
 
   outputs = { self, futils, nixpkgs, pre-commit-hooks }:
-    futils.lib.eachDefaultSystem (system:
+    {
+      overlay = final: prev: {
+        abacus = final.stdenv.mkDerivation {
+          pname = "abacus";
+          version = "0.0.0";
+
+          src = self;
+
+          nativeBuildInputs = with final; [
+            bison
+            cmake
+            flex
+            ninja
+            pkg-config
+          ];
+
+          checkInputs = with final; [
+            gtest
+          ];
+
+          doCheck = true;
+
+          meta = with final.lib; {
+            description = "A simple calculator using big numbers";
+            homepage = "https://gitea.belanyi.fr/ambroisie/abacus";
+            license = licenses.mit;
+            maintainers = [ ambroisie ];
+            platforms = platforms.unix;
+          };
+        };
+      };
+    } // futils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system; };
+        pkgs = import nixpkgs { inherit system; overlays = [ self.overlay ]; };
       in
       {
         checks = {
@@ -67,34 +98,7 @@
         };
 
         packages = futils.lib.flattenTree {
-          abacus = pkgs.stdenv.mkDerivation {
-            pname = "abacus";
-            version = "0.0.0";
-
-            src = self;
-
-            nativeBuildInputs = with pkgs; [
-              bison
-              cmake
-              flex
-              ninja
-              pkg-config
-            ];
-
-            checkInputs = with pkgs; [
-              gtest
-            ];
-
-            doCheck = true;
-
-            meta = with pkgs.lib; {
-              description = "A simple calculator using big numbers";
-              homepage = "https://gitea.belanyi.fr/ambroisie/abacus";
-              license = licenses.mit;
-              maintainers = [ ambroisie ];
-              platforms = platforms.unix;
-            };
-          };
+          inherit (pkgs) abacus;
         };
       });
 }
