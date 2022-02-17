@@ -68,6 +68,34 @@ TEST(BigNum, comparisons_digits) {
     EXPECT_GT(ten, nine);
 }
 
+TEST(BigNum, comparisons_negative) {
+    auto const zero = BigNum(0);
+    auto const minus_one = BigNum(-1);
+    auto const minus_two = BigNum(-2);
+
+    EXPECT_LT(minus_one, zero);
+    EXPECT_LE(minus_one, zero);
+    EXPECT_LT(minus_two, minus_one);
+    EXPECT_LE(minus_two, minus_one);
+    EXPECT_LE(minus_one, minus_one);
+    EXPECT_GE(minus_two, minus_two);
+
+    EXPECT_GT(zero, minus_one);
+    EXPECT_GE(zero, minus_one);
+    EXPECT_GT(minus_one, minus_two);
+    EXPECT_GE(minus_one, minus_two);
+    EXPECT_GE(minus_one, minus_one);
+    EXPECT_GE(minus_two, minus_two);
+}
+
+TEST(BigNum, comparisons_digits_negative) {
+    auto const minus_nine = BigNum(-9);
+    auto const minus_ten = BigNum(-10);
+
+    EXPECT_LT(minus_ten, minus_nine);
+    EXPECT_GT(minus_nine, minus_ten);
+}
+
 TEST(BigNum, unary) {
     auto const zero = BigNum(0);
     auto const one = BigNum(1);

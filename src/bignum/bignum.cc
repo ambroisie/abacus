@@ -363,7 +363,11 @@ bool BigNum::less_than(BigNum const& rhs) const {
         return sign_ < rhs.sign_;
     }
 
-    return do_less_than(digits_, rhs.digits_);
+    if (is_positive()) {
+        return do_less_than(digits_, rhs.digits_);
+    } else {
+        return do_less_than(rhs.digits_, digits_);
+    }
 }
 
 void BigNum::canonicalize() {
