@@ -385,15 +385,15 @@ bool BigNum::is_canonicalized() const {
         return sign_ == 0;
     }
 
-    auto const leading_zeros = std::find_if(digits_.rbegin(), digits_.rend(),
-                                            [](auto v) { return v != 0; });
-    if (leading_zeros != digits_.rbegin()) {
+    // `back` is valid since there is at least one element
+    auto const has_leading_zero = digits_.back() == 0;
+    if (has_leading_zero) {
         return false;
     }
 
-    auto const overflow = std::find_if(digits_.begin(), digits_.end(),
-                                       [](auto v) { return v >= BASE; });
-    if (overflow != digits_.end()) {
+    auto const has_overflow = std::any_of(digits_.begin(), digits_.end(),
+                                          [](auto v) { return v >= BASE; });
+    if (has_overflow) {
         return false;
     }
 
