@@ -30,7 +30,7 @@
 
   outputs = { self, futils, nixpkgs, pre-commit-hooks }:
     {
-      overlay = final: prev: {
+      overlays.default = final: prev: {
         abacus = final.stdenv.mkDerivation {
           pname = "abacus";
           version = "0.0.0";
@@ -62,7 +62,7 @@
       };
     } // futils.lib.eachDefaultSystem (system:
       let
-        pkgs = import nixpkgs { inherit system; overlays = [ self.overlay ]; };
+        pkgs = import nixpkgs { inherit system; overlays = [ self.overlays.default ]; };
       in
       {
         checks = {
@@ -87,9 +87,7 @@
           };
         };
 
-        defaultPackage = self.packages.${system}.abacus;
-
-        devShell = pkgs.mkShell {
+        devShells.default = pkgs.mkShell {
           inputsFrom = with self.packages.${system}; [
             abacus
           ];
@@ -99,6 +97,7 @@
 
         packages = futils.lib.flattenTree {
           inherit (pkgs) abacus;
+          default = pkgs.abacus;
         };
       });
 }
