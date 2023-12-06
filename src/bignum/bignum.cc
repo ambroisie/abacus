@@ -107,7 +107,7 @@ digits_type do_substraction(digits_type const& lhs, digits_type const& rhs) {
     assert(!do_less_than(lhs, rhs));
 
     digits_type complement;
-    auto const take_complement = [](auto num) { return 9 - num; };
+    auto const take_complement = [](auto num) { return BASE - 1 - num; };
     std::transform(lhs.begin(), lhs.end(), std::back_inserter(complement),
                    take_complement);
 
